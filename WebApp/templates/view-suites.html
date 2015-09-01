@@ -1,0 +1,46 @@
+﻿
+
+<div ng-controller="SuitesController">
+    <h1>{{suite.TestSuite}}</h1>
+    <div>
+        <a style="padding-right:10%" ng-click="validateSuites()" class="icon">Run Suites</a>
+            <a style="padding-right:10%" href="/suites/new" class="icon">New Suite</a>
+            <a href="/suites/#/editSuites" class="pull-right">+ Edit Suites</a>
+        <br/><br/>
+        <div id="tblWrapper">
+            <table class="table table-bordered" id="runTestTable">
+                <thead>
+                    <tr style="border:none">
+                        <th class="shortCell">Name</th>
+                        <th class="shortCell">Description</th>
+                        <th class="shortCell">Test Sequentially</th>
+                        <th class="shortCell">Success?</th>
+                        <th class="shortCell">View Tests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="test-row" ng-repeat="s in suites">
+                        <td class="shortCell">
+                            <a href="/suites/#/run/{{s.Suite.SortOrder}}">{{s.Suite.TestSuite}}</a>
+                        </td>
+                        <td class="shortCell">
+                            <span ng-bind="s.Suite.Description"></span>
+                        </td>
+                        <td class="longCell">
+                            <input type="checkbox" ng-model="s.Suite.TestInOrder" disabled="disabled"
+                                    />
+                        </td>
+                        <td class="shortCell">
+                            <input type="checkbox" disabled="disabled" ng-model="s.Suite.success"/>
+                        </td>
+                        <td class="shortCell">
+                            <a href="/suites/#/edit/{{s.Suite.SortOrder}}">Edit</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

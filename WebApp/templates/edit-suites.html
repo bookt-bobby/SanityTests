@@ -1,0 +1,52 @@
+﻿    
+
+
+<div ng-controller="SuitesController">
+    <div>
+            <a href="/suites/new" style="padding-right:10%">Add Suite</a>
+        <a ng-click="delete()"> Delete</a>
+        <a href="/suites/#/viewSuites" class="pull-right">- View Suites</a>
+        <br /><br/>
+        <div id="tblWrapper">
+            <table class="table table-bordered display" id="example">
+                <thead>
+                    <tr style="border:none">
+                        <th class="longCell">Name</th>
+                        <th class="shortCell">Description</th>
+                        <th class="shortCell">Run Sequential</th>
+                        <th class="shortCell">Add Test</th>
+                        <th class="shortCell">Edit Tests</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="test-row" ng-repeat="s in suites">
+
+                        <td class="longCell">
+                            <input type="checkbox" data-id="{{s.Suite.Id}}" ng-model="s.Selected" 
+                                   ng-true-value="true" ng-false-value="false" value="edit" onclick="editRow(this)" />
+                            &nbsp;<span class="view-{{s.Suite.Id}}" ng-bind="s.Suite.TestSuite"></span>
+                            <input title="Edit tests which apply to this suite" ng-blur="save()" class="edit-{{s.Suite.Id}} initHidden" ng-bind="s.Suite.TestSuite" ng-model="s.Suite.TestSuite" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{s.Suite.Id}}" ng-bind="s.Suite.Description"></span>
+                            <textarea ng-blur="save()" class="edit-{{s.Suite.Id}} initHidden shortCell" rows="4" ng-bind="s.Suite.Description" ng-model="s.Suite.Description" />
+                        </td>
+                        <td class="longCell">
+                            <input type="checkbox" ng-model="s.Suite.TestInOrder" ng-bind="s.Suite.TestInOrder" ng-change="save()"
+                                   />
+                        </td>
+                        <td class="shortCell">
+                            <a class="edits-{{s.Suite.Id}} initHiddens" href="/tests/new?sid={{s.Suite.SortOrder}}"><i class="icon-large icon-plus-sign"></i></a>
+                        </td>
+                        <td class="shortCell">
+                            <a class="edits-{{s.Suite.Id}} initHiddens" href="/suites/#/edit/{{s.Suite.SortOrder}}"><i class="icon-large icon-edit"></i></a>
+                        </td>
+                        
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

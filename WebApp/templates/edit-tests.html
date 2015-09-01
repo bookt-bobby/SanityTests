@@ -1,0 +1,140 @@
+﻿<style>
+    /*fixed widths for desktop*/
+    .shortCell {
+        width: 200px !important;
+        max-width: 200px !important;
+        min-width: 200px !important;
+        background-color: white;
+        height: 100px;
+        max-height: 300px;
+        padding-left:12px;
+        padding-right:12px;
+        overflow-x:auto;
+    }
+    .ofhidden {
+    }
+
+    .longCell {
+        width: 200px !important;
+        max-width: 200px !important;
+        min-width: 200px !important;
+        overflow: auto;
+        background-color: white;
+        padding-left: 12px;
+    }
+    .initHidden {
+        display: none;
+    }
+</style>
+
+<div ng-controller="TestsController">
+    <h1 title="{{suite.Description}}">{{suite.TestSuite}}</h1>
+    <div><div ><button type="button" ng-click="validate()" class="btn btn-default"  >Validate</button> 
+             <button type="button" ng-click="delete()" class="btn btn-default"  >Delete</button>
+             <button type="button" class="btn btn-default"  onclick="window.location.href = '/tests/new?sid=' + this.getAttribute('data-suiteId')" data-suiteid="{{suiteId}}" >New</button>
+             <button type="button" class="btn btn-default pull-right" onclick="window.location.href='/tests/#/run/' + this.getAttribute('data-suiteId');" data-suiteid="{{suiteId}}" value="Run Tests" >Run Tests</button>
+        </div>
+            <select style="display:none"><option>Delete</option><option>Edit</option></select><div><br /></div>
+        <div id="tblWrapper">
+            <table class="table table-bordered display" id="example">
+                <thead>
+                    <tr style="border:none">
+                        <th class="longCell">Select</th>
+                        <th class="shortCell">Url</th>
+                        <th class="shortCell">Property</th>
+                        <th class="shortCell">Expected Value</th>
+                        <th class="shortCell">Description</th>
+                        <th class="shortCell">Success?</th>
+                        <th class="shortCell">Actual Value</th>
+                        <th class="shortCell">Error</th>
+                        <th class="shortCell">Error Message Path</th>
+                        <th class="shortCell">Response Data</th>
+                        <th class="shortCell">Post Data</th>
+                        <th class="shortCell">Method</th>
+                        <th class="shortCell">Content Type</th>
+                        <th class="shortCell">Order</th>
+                        <th class="shortCell">Suite</th>
+                        <th class="shortCell">Return Param Name</th>
+                        <th class="shortCell">Return Param Path</th>
+                        <th class="shortCell">Pause First?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="test-row" ng-repeat="t in tests">
+
+                        <td class="longCell">
+                            <input type="checkbox" data-id="{{t.Test.Id}}" ng-model="t.Selected" ng-true-value="True" ng-false-value="False" value="edit" onclick="editRow(this)" />
+                            &nbsp;<span class="view-{{t.Test.Id}}" ng-bind="t.Test.Test"></span>
+                            <input ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.Test" ng-model="t.Test.Test" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Url"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden shortCell" ng-bind="t.Test.Url" ng-model="t.Test.Url" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Property"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.Property" ng-model="t.Test.Property" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Value"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.Value" ng-model="t.Test.Value" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Description"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.Description" ng-model="t.Test.Description" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="" ng-bind="t.Test.TestSuccess"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span ng-bind="t.Test.ActualValue"></span>
+                        <td class="shortCell">
+                            <span ng-bind="t.Test.ErrorFromPath"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}} " ng-bind="t.Test.ErrorMessagePath"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-model="t.Test.ErrorMessagePath"></textarea>
+                        </td>
+                        <td class="shortCell">
+                            <span ng-bind-html-unsafe="t.Test.Response" style="max-height:40px;overflow:scroll"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden"  ng-bind="t.Test.PostData" ng-model="t.Test.PostData" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Method"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.Method" ng-model="t.Test.Method" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.ContentType"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.ContentType" ng-model="t.Test.ContentType" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Order"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Order" ng-model="t.Order" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Suite.TestSuite"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Suite.TestSuite" ng-model="t.Suite.TestSuite" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.ReturnParamName"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.ReturnParamName" ng-model="t.Test.ReturnParamName" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.ReturnParamPath"></span>
+                            <textarea ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" ng-bind="t.Test.ReturnParamPath" ng-model="t.Test.ReturnParamPath" />
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.PauseFirst"></span>
+                            <input ng-blur="save()" class="edit-{{t.Test.Id}} initHidden" type="checkbox" ng-model="t.Test.PauseFirst" ng-true-value="True" ng-false-value="False" />
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div> 
+

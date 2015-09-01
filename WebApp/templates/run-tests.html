@@ -1,0 +1,49 @@
+﻿
+
+<div ng-controller="TestsController">
+    <h1>{{suite.TestSuite}} &nbsp;&nbsp;<button type="button" class="btn btn-default" ng-click="validate();" style="cursor:pointer">Validate</button></h1>
+    <div><a class="pull-right" href="/tests/#/edit/{{suiteId}}">Edit Tests</a>
+        <div id="tblWrapper">
+            <table class="table-bordered display" id="example2">
+                <thead>
+                    <tr style="border:none">
+                        <th style="border:0px"></th>
+                        <th class="longCell"><i class="icon-large icon-check"></i></th>
+                        <th class="shortCell">Name</th>
+                        <th class="shortCell">Description</th>
+                        <th class="shortCell">Url</th>
+                        <th class="shortCell">Expected Value</th>
+                        <th class="shortCell">Value</th>
+                        <th class="shortCell">Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="test-row" ng-repeat="t in tests">
+                        <td style="border:0px"><button ng-show="t.Test.PauseFirst" ng-disabled="!t.Test.IsPaused" ng-click="unPauseTest(t.Test)">Continue</button></td>
+                        <td style="white-space:nowrap"><i class="icon-large {{t.Test.TestResultIcon}}"></i><span class="view-{{t.Test.Id}}" ng-bind="t.Test.TestSuccess"></span></td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Test"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Description"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Id}}" ng-bind="t.Test.Url"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.Value}}" ng-bind="t.Test.Value"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.ActualValue}}" ng-bind="t.Test.ActualValue"></span>
+                        </td>
+                        <td class="shortCell">
+                            <span class="view-{{t.Test.ErrorFromPath}}" ng-bind="t.Test.ErrorFromPath"></span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        </div>
+        </div> 
+

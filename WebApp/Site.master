@@ -1,0 +1,120 @@
+﻿<%@ Master Language="VB" AutoEventWireup="true" CodeFile="Site.master.vb" Inherits="SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en" ng-app="app">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title ng-bind="Hola $root.title"></title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+            <link href="//cdn.datatables.net/fixedcolumns/3.0.0/css/dataTables.fixedColumns.css" rel="stylesheet" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <form runat="server">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" runat="server" href="/">Sanity Tests</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <AnonymousTemplate>
+                    <ul class="nav navbar-nav">
+                        <li><a  href="/Contact">Contact</a></li>
+                        <li><a  href="/About">About</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a  href="/Company/Register">Register</a></li>
+                        <li><a  href="/Account/Login">Log in</a></li>
+
+                    </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <ul class="nav navbar-nav">
+                        <li class="dropdown"><a data-toggle="dropdown">All Tests<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a runat="server" href="/tests/#/runTests">Run</a></li>
+                            <li><a href="/tests/#/editTests">Edit</a></li>
+                            <li><a href="/tests/new">New</a></li>
+                          </ul>
+                        </li>
+                        <li class="dropdown"><a data-toggle="dropdown">Suites<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a runat="server" href="/suites/#/viewSuites">View</a></li>
+                            <li><a href="/suites/#/editSuites">Edit</a></li>
+                            <li><a href="/suites/new">New</a></li>
+                            
+                          </ul>
+                        </li>
+                    </ul>
+                            <ul class="nav navbar-nav " style="padding-left:5%">
+                            <li ng-controller="TestsController"><span style="color:white">Base Url: </span> <input type="text" ng-blur="saveCompany()"  ng-model="c.BaseUrl" /></li>
+                             </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a runat="server" href="/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %>!</a></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                                 <li><a runat="server" href="/company/invite">Invite User</a></li>
+                               
+                            </ul>
+                            
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Sanity Tests.com</p>
+            </footer>
+        </div>
+
+    <asp:ScriptManager runat="server">
+                <Scripts>
+                    <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                    <%--Framework Scripts--%> 
+                    <asp:ScriptReference Name="jquery" /> 
+                    <asp:ScriptReference Name="MsAjaxBundle" />
+                    <asp:ScriptReference Name="angular" />
+                    <asp:ScriptReference Name="angular-route" />
+                    <asp:ScriptReference Name="angular-app" />
+                 
+                    <asp:ScriptReference Name="bootstrap" />
+                    <asp:ScriptReference Name="respond" />
+                    <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                    <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                    <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                    <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                    <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                    <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                    <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                    <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                    <asp:ScriptReference Name="WebFormsBundle" />
+                </Scripts>
+    </asp:ScriptManager>
+ <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  <script src="https://datatables.net/release-datatables/extensions/FixedColumns/js/dataTables.fixedColumns.js"></script>
+
+
+    </form>
+</body>
+            
+        
+</html>
